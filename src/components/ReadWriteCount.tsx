@@ -1,8 +1,9 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { countState, doubleCountState } from '../recoil/count';
 
 function ReadWriteCount() {
     const [ count, setCount ] = useRecoilState(countState);
+    const setCountWithSetRecoilState = useSetRecoilState(countState);
     const doubleCount = useRecoilValue(doubleCountState);
 
     return (
@@ -12,6 +13,7 @@ function ReadWriteCount() {
             <p>더블 카운트 {doubleCount}</p>
             <button onClick={() => setCount(count + 1)}>숫자 증가</button>
             <button onClick={() => setCount(count - 1)}>숫자 감소</button>
+            <button onClick={() => setCountWithSetRecoilState(0)}>숫자 0으로 초기화 (useSetRecoilState) 사용</button>
         </div>
     );
 }
