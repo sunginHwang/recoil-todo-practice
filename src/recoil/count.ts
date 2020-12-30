@@ -19,13 +19,15 @@ export const doubleCountState = selector({
     },
 });
 
-export const countTitleState = selector({
+// set의 2번째 param인 인자의 타입은 state get 타입과 동일시 해야 함. (제네릭 처리 되어 있음)
+export const countTitleState = selector<string>({
     key: 'countTitleState',
     get: ({ get }) => {
         return `현재 카운트는 ${get(countState)} 이고 입력값은 ${get(inputState)} 입니다.`;
     },
-    set: ({ set }) => {
-      set(countState, 0);
-      set(inputState, '');
+    set: ({ set }, newValue) => {
+      console.log(newValue);
+      set(countState, Number(newValue));
+      set(inputState, newValue + '');
     },
 });
