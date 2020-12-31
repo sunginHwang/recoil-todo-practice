@@ -1,5 +1,5 @@
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { inputState, countTitleState, countState } from '../recoil/count';
+import { inputState, countTitleState, countState } from '../../recoil/count';
 
 function CountInput() {
     const [ countTitle, setCountTitle ] = useRecoilState(countTitleState);

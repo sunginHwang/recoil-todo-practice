@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { countState, doubleCountState } from '../recoil/count';
+import { countState, doubleCountState } from '../../recoil/count';
 
 function ReadWriteCount() {
     const [ count, setCount ] = useRecoilState(countState);

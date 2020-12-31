@@ -11,8 +11,6 @@ const app = document.getElementById('root');
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <RecoilizeDebugger root={app} />
-      <DebugObserver />
       <App />
     </RecoilRoot>
   </React.StrictMode>,

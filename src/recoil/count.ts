@@ -1,6 +1,8 @@
 
 import { atom, selector } from 'recoil';
 
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 export const countState = atom({
     key: 'countState',
     default: 0,
@@ -31,3 +33,24 @@ export const countTitleState = selector<string>({
       set(inputState, newValue + '');
     },
 });
+
+
+// 비동기 처리 셀렉터
+export const recoilStarSelector = selector<number>({
+    key: 'asyncState',
+    get: async () => {
+        const response = await fetch('https://api.github.com/repos/facebookexperimental/Recoil');
+        const recoilProjectInfo = await response.json();
+        return recoilProjectInfo['stargazers_count'];
+    },
+})
+
+
+// 비동기 처리 셀렉터
+export const delay10Selector = selector<string>({
+    key: 'asyncState',
+    get: async () => {
+        await delay(5000);
+        return '딜레이 종료';
+    },
+})
