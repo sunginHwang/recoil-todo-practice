@@ -1,8 +1,7 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
-import ReadOnlyCount from './components/ count/ReadOnlyCount';
-import ReadWriteCount from './components/ count/ReadWriteCount';
-import CountInput from './components/ count/CountInput';
+import ReadOnlyCount from './components/ count/example/ReadOnlyCount';
+import ReadWriteCount from './components/ count/example/ReadWriteCount';
 
 import './App.css';
 import RecoilStarCount from "./components/ count/RecoilStarCount";
@@ -10,12 +9,11 @@ import RecoilStarCount from "./components/ count/RecoilStarCount";
 function App() {
   return (
     <div className="App">
-      <CountInput />
       <ReadOnlyCount />
       <ReadWriteCount />
-      <Suspense fallback={<div>로딩중 입니다.</div>}>
+      <React.Suspense fallback={<div>loading</div>} >
         <RecoilStarCount />
-      </Suspense>
+      </React.Suspense>
     </div>
   );
 }

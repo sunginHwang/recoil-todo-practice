@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { RecoilRoot } from 'recoil';
-import RecoilizeDebugger from 'recoilize';
+import { RecoilRoot } from 'recoil'; // recoil 추가
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import DebugObserver from './debug/DebugOpserver';
 
 const app = document.getElementById('root');
 ReactDOM.render(

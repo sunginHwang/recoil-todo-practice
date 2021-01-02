@@ -17,7 +17,7 @@ export const inputState = atom({
 export const doubleCountState = selector({
     key: 'doubleCountState',
     get: ({ get }) => {
-      return get(countState) * 2;
+        return get(countState) * 2;
     },
 });
 
@@ -28,9 +28,9 @@ export const countTitleState = selector<string>({
         return `현재 카운트는 ${get(countState)} 이고 입력값은 ${get(inputState)} 입니다.`;
     },
     set: ({ set }, newValue) => {
-      console.log(newValue);
-      set(countState, Number(newValue));
-      set(inputState, newValue + '');
+        console.log(newValue);
+        set(countState, Number(newValue));
+        set(inputState, newValue + '');
     },
 });
 
@@ -39,18 +39,26 @@ export const countTitleState = selector<string>({
 export const recoilStarSelector = selector<number>({
     key: 'asyncState',
     get: async () => {
+        console.log('fetch');
         const response = await fetch('https://api.github.com/repos/facebookexperimental/Recoil');
         const recoilProjectInfo = await response.json();
+        console.log(response);
         return recoilProjectInfo['stargazers_count'];
     },
 })
 
 
+export const delayCountState = atom({
+    key: 'delayCountState',
+    default: 0,
+});
+
 // 비동기 처리 셀렉터
 export const delay10Selector = selector<string>({
-    key: 'asyncState',
-    get: async () => {
-        await delay(5000);
-        return '딜레이 종료';
+    key: 'delay10Selector',
+    get: async ({ get }) => {
+        const result = `${get(delayCountState)} 아톰정보`;
+        await delay(2000);
+        return result;
     },
 })
