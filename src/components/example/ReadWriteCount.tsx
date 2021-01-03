@@ -1,10 +1,11 @@
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
-import { countState } from '../../../recoil/count';
+import { countState } from '../../recoil/count';
 
 function ReadWriteCount() {
     const [ count, setCount ] = useRecoilState(countState); // useRecoilState 을 통한 value, setter 반환
     const setCountUseSetRecoilState = useSetRecoilState(countState); // 값을 변경하는 함수만 반환
     const resetCount = useResetRecoilState(countState); // 설정된 기본값으로 리셋
+
     return (
         <div>
             <h2>읽기 쓰기 카운트 컴포넌트</h2>

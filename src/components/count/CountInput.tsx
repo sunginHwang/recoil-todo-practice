@@ -1,8 +1,8 @@
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { inputState, countTitleState, countState } from '../../recoil/count';
+import { inputState, countInputState, countState } from '../../recoil/count';
 
 function CountInput() {
-    const [ countTitle, setCountTitle ] = useRecoilState(countTitleState);
+    const [ countTitle, setCountTitle ] = useRecoilState(countInputState);
     const [ inputValue, setInput ] = useRecoilState(inputState);
     // 해당 요소의 기본값으로 reset 시키는 역활
     const resetState = useResetRecoilState(countState);

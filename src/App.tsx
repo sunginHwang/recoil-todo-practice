@@ -1,19 +1,23 @@
 import React from 'react';
-
-import ReadOnlyCount from './components/ count/example/ReadOnlyCount';
-import ReadWriteCount from './components/ count/example/ReadWriteCount';
-
+import ReadOnlyCount from './components/example/ReadOnlyCount';
+import ReadWriteCount from './components/example/ReadWriteCount';
+import SelectorCount from "./components/example/SelectorCount";
+import DelayCount from "./components/example/DelayCount";
+import RecoilStarCount from "./components/example/RecoilStarCount";
 import './App.css';
-import RecoilStarCount from "./components/ count/RecoilStarCount";
 
 function App() {
   return (
     <div className="App">
-      <ReadOnlyCount />
-      <ReadWriteCount />
-      <React.Suspense fallback={<div>loading</div>} >
-        <RecoilStarCount />
-      </React.Suspense>
+        {/* atom 예시
+        <>
+          <ReadWriteCount />
+          <ReadOnlyCount />
+        </>
+        */}
+        {/* select 예시 <SelectorCount />*/}
+        {/* 비동기 통신 예시 <RecoilStarCount />*/}
+        {/* 캐싱 예시 <DelayCount />*/}
     </div>
   );
 }
