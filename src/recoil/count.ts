@@ -22,3 +22,11 @@ export const countInputState = selector<string>({
         set(inputState, newValue + ''); // input atom 수정
     },
 });
+
+// 비동기 값 반환 atom
+export const promiseCountState = atom({
+    key: 'promiseCountState',
+    default: new Promise(resolve => {
+        setTimeout(() => resolve(1), 1000);
+    }),
+});
