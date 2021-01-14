@@ -1,5 +1,7 @@
 import { useState, Suspense } from 'react';
+import { useRecoilCallback } from 'recoil';
 import PersonInfo from "./PersonInfo";
+import memorizeTrigger from "../../recoil/study/memorizeTrigger";
 
 function AtomFamilyCache() {
     const [ name, setName ] = useState('');
@@ -23,11 +25,18 @@ function AtomFamilyCache() {
             <input value={name} placeholder='이름을 입력해주세요.' onChange={(e) => setName(e.target.value)}/>
             <button onClick={onClickAddPerson}>사람 추가</button>
             <br/>
-            {
-                personList.map((name) => {
-                    return <button key={name} onClick={() => setActivePersonName(name)}>{name} 정보 불러오기</button>;
-                })
-            }
+            <div>
+                {
+                    personList.map((name) => {
+                        return <button key={name} onClick={() => setActivePersonName(name)}>{name} 정보 불러오기</button>;
+                    })
+                }
+            </div>
+            <div>
+                {
+                    personList.map((name) => <ResetPerson key={name} name={name} />)
+                }
+            </div>
             <br />
             {
                 activePersonName !== '' && (
@@ -43,7 +52,21 @@ function AtomFamilyCache() {
     );
 }
 
+function ResetPerson({ name }: { name: string }) {
+    const refresh = memorizeTrigger.trigger.useRefreshUserInfo(name);
+    const onPrefetch = useRecoilCallback(({ snapshot, set }) => async (name: string) => {
+        console.log('onPrefetch');
+        await snapshot.getPromise(memorizeTrigger.selectorFamilies.personState(name));
+        // snapshot.getLoadable(memorizeTrigger.selectorFamilies.personState(name));
+    });
 
+    const onClickReset = async () => {
+        await refresh();
+        await onPrefetch(name);
+    };
+
+    return <button key={name} onClick={onClickReset}>{name} 정보 리셋하기</button>;
+}
 
 
 export default AtomFamilyCache;
