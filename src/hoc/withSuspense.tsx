@@ -1,4 +1,4 @@
-import React, {ComponentType, FC} from 'react';
+import React from 'react';
 
 const withSuspense = <T, >(WrappedComponent: any, FallbackComponent:React.ReactNode  = null) => {
     return class extends React.Component<T> {
