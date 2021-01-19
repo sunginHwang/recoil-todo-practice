@@ -1,13 +1,13 @@
 import React, { useState, Suspense } from 'react';
 import {useRecoilCallback, useRecoilValue} from 'recoil';
-import memorizeTrigger from "../../recoil/study/memorizeTrigger";
+import selectorPrefetch from "../../recoil/study/selectorPrefetch";
 
 function SelectorPrefetch() {
     const [ isShowSelector, setIsShowSelector ] = useState(false);
 
 
     const onPrefetchSelector = useRecoilCallback(({ snapshot }) => async () => {
-        snapshot.getLoadable(memorizeTrigger.selectors.personListState);
+        snapshot.getLoadable(selectorPrefetch.selectors.personListState);
     });
 
     return (
@@ -30,7 +30,7 @@ function SelectorPrefetch() {
 export default SelectorPrefetch;
 
 function SelectorList() {
-    const personList = useRecoilValue(memorizeTrigger.selectors.personListState);
+    const personList = useRecoilValue(selectorPrefetch.selectors.personListState);
 
     return (
         <>
