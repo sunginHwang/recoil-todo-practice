@@ -1,10 +1,11 @@
-import { useState, Suspense } from 'react';
-import { useRecoilCallback } from 'recoil';
+import React, { useState, Suspense } from 'react';
+import {useRecoilCallback, useRecoilValue} from 'recoil';
 import PersonInfo from "./PersonInfo";
 import memorizeTrigger from "../../recoil/study/memorizeTrigger";
 
 function AtomFamilyCache() {
     const [ name, setName ] = useState('');
+
     const [ personList, setPersonList ] = useState<string[]>([]);
     const [ activePersonName, setActivePersonName ] = useState<string>('');
 
@@ -19,6 +20,7 @@ function AtomFamilyCache() {
         setPersonList(prevState => [...prevState, name]);
         setName('');
     };
+
 
     return (
         <>
@@ -36,6 +38,9 @@ function AtomFamilyCache() {
                 {
                     personList.map((name) => <ResetPerson key={name} name={name} />)
                 }
+                {
+                    personList.map((name) => <AFPerson key={name} name={name} />)
+                }
             </div>
             <br />
             {
@@ -52,16 +57,39 @@ function AtomFamilyCache() {
     );
 }
 
+function AFPerson({ name }: { name: string }) {
+    const personAF = useRecoilValue(memorizeTrigger.atomFamilies.personNameState(name));
+    return (
+        <div><span>{name} AF : </span>{personAF}</div>
+    );
+}
+
 function ResetPerson({ name }: { name: string }) {
     const refresh = memorizeTrigger.trigger.useRefreshUserInfo(name);
     const onPrefetch = useRecoilCallback(({ snapshot, set }) => async (name: string) => {
-        console.log('onPrefetch');
-        await snapshot.getPromise(memorizeTrigger.selectorFamilies.personState(name));
-        // snapshot.getLoadable(memorizeTrigger.selectorFamilies.personState(name));
+        await refresh();
+        snapshot.getLoadable(memorizeTrigger.selectorFamilies.personState(name));
     });
 
+    const onPrefetch1 = useRecoilCallback(({ snapshot, set }) => async (name: string) => {
+        console.log('onPrefetch1');
+        await set(memorizeTrigger.atomFamilies.personNameState(name), 76);
+    });
+
+    const onPrefetch2 = useRecoilCallback(({ snapshot, set }) => async (name: string) => {
+        console.log('onPrefetch2');
+        await snapshot.getLoadable(memorizeTrigger.atomFamilies.personNameState(name));
+        snapshot.getLoadable(memorizeTrigger.selectorFamilies.personState(name));
+    });
+
+    const onPrefetch3 = async (name: any) => {
+        await onPrefetch1(name);
+        console.log('why');
+        await onPrefetch2(name);
+    }
+
+
     const onClickReset = async () => {
-        await refresh();
         await onPrefetch(name);
     };
 
